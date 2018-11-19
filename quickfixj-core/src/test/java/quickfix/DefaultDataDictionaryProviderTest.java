@@ -20,8 +20,14 @@
 package quickfix;
 
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.*;
-import static quickfix.field.ApplVerID.*;
+import static quickfix.field.ApplVerID.FIX40;
+import static quickfix.field.ApplVerID.FIX44;
+import static quickfix.field.ApplVerID.FIX50SP1;
+import static quickfix.field.ApplVerID.FIX50SP2;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -77,7 +83,7 @@ public class DefaultDataDictionaryProviderTest {
         try {
             provider.getSessionDataDictionary("FIX44_Invalid_Test");
         } catch (QFJException e) {
-            assertThat(e.getCause(), is(ConfigError.class));
+            assertThat(e.getCause(), is(instanceOf(ConfigError.class)));
         }
     }
 
@@ -89,7 +95,7 @@ public class DefaultDataDictionaryProviderTest {
 
         DataDictionary dd = provider.getApplicationDataDictionary(new ApplVerID(FIX40));
 
-        assertThat(dd, is(dictionaryForTest2));
+        assertThat(dd, is(instanceOf(dictionaryForTest2.getClass())));
     }
 
     @Test

@@ -21,6 +21,7 @@ package org.quickfixj.codegenerator;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
 
@@ -42,6 +43,7 @@ public class GenerateMojo extends AbstractMojo {
      *
      * @parameter expression="${basedir}/src/main/quickfixj/dictionary/FIX44.xml"
      */
+	@Parameter
     private File dictFile;
 
     /**
@@ -49,6 +51,7 @@ public class GenerateMojo extends AbstractMojo {
      *
      * @parameter expression="${basedir}/src/resources/quickfixj/codegenerator"
      */
+	@Parameter
     private File schemaDirectory;
 
     /**
@@ -56,6 +59,7 @@ public class GenerateMojo extends AbstractMojo {
      *
      * @parameter expression="${project.build.directory}/generated-sources/"
      */
+	@Parameter
     private File outputDirectory;
 
     /**
@@ -63,6 +67,7 @@ public class GenerateMojo extends AbstractMojo {
      *
      * @parameter default-value="false"
      */
+	@Parameter(defaultValue="false")
     private boolean decimal;
 
     /**
@@ -70,6 +75,7 @@ public class GenerateMojo extends AbstractMojo {
      *
      * @parameter default-value="false"
      */
+	@Parameter(defaultValue="false")
     private boolean orderedFields;
 
     /**
@@ -77,6 +83,7 @@ public class GenerateMojo extends AbstractMojo {
      *
      * @parameter
      */
+	@Parameter
     private String packaging;
 
     /**
@@ -84,6 +91,7 @@ public class GenerateMojo extends AbstractMojo {
      *
      * @parameter default-value = "quickfix.field"
      */
+	@Parameter
     private String fieldPackage = "quickfix.field";
 
     /**
@@ -92,6 +100,7 @@ public class GenerateMojo extends AbstractMojo {
      * @parameter expression="${project}"
      * @required
      */
+	@Parameter
     private MavenProject project;
 
     /**

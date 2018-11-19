@@ -439,7 +439,7 @@ public abstract class FieldMap implements Serializable {
         return fields.values().iterator();
     }
 
-    protected void initializeFrom(FieldMap source) {
+    public void initializeFrom(FieldMap source) {
         fields.clear();
         fields.putAll(source.fields);
         for (Entry<Integer, List<Group>> entry : source.groups.entrySet()) {

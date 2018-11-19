@@ -16,13 +16,14 @@
     <properties>
         <acceptance.tests>**/AcceptanceTestSuite.java</acceptance.tests>
         <mainClass>org.quickfixj.Version</mainClass>
+        <generator.decimal>true</generator.decimal>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
+            <version>${quickfix.junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -34,7 +35,10 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
-            <version>1.1</version>
+            <!-- version>1.3</version -->
+            <!--  To get to 1.3, quickfixj-core/src/test/java/quickfix/MessageUtilsTest.java:[176,9],[191,9],[208,9]: no suitable method found for assertThat(quickfix.Message,org.hamcrest.Matcher -->
+            <!--  And to get to 1.3, quickfixj-core/src/test/java/quickfix/DefaultDataDictionaryProviderTest.java:[80,13]: no suitable method found for assertThat(java.lang.Throwable,org.hamcrest.Matcher  -->
+            <version>1.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -64,7 +68,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
+            <version>${slf4j.api.version}</version>
         </dependency>
 
         <dependency>
@@ -305,7 +309,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven-jar-plugin-version}</version>
                 <configuration>
                     <includes>
                         <include>quickfix/**</include>
@@ -338,7 +341,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin-version}</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -346,11 +348,12 @@
                             <goal>jar</goal>
                         </goals>
                         <configuration>
-                            <additionalparam>-Xdoclint:none</additionalparam>
+                            <additionalOptions>-Xdoclint:none</additionalOptions>
+                            <doclint>none</doclint>
                             <maxmemory>3g</maxmemory>
                             <includeDependencySources>false</includeDependencySources>
                             <!-- we do not want to have javadoc for the field and message classes in the core module -->
-                            <sourcepath>src/main/java</sourcepath>
+                            <sourcepath>src/main/java:target/generated-sources</sourcepath>
                         </configuration>
                     </execution>
                 </executions>
@@ -383,7 +386,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <argLine>-Xmx512m -Djava.net.preferIPv4Stack=true</argLine>
+                    <argLine>-Xmx2048m -Djava.net.preferIPv4Stack=true</argLine>
                     <trimStackTrace>false</trimStackTrace>
                     <includes>
                         <include>**/*Test.java</include>
@@ -417,7 +420,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.5</version>
+                <version>${maven-jxr-plugin-version}</version>
             </plugin>
         </plugins>
     </reporting>
