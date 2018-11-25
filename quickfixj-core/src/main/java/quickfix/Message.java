@@ -20,6 +20,7 @@
 package quickfix;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.List;
@@ -115,9 +116,9 @@ public class Message extends FieldMap {
     @Override
     public Object clone() {
         try {
-            final Message message = getClass().newInstance();
+            final Message message = getClass().getDeclaredConstructor().newInstance();
             return cloneTo(message);
-        } catch (final InstantiationException | IllegalAccessException e) {
+        } catch (final InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
             throw new RuntimeException(e);
         }
     }
