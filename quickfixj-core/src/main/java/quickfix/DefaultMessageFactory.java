@@ -135,7 +135,7 @@ public class DefaultMessageFactory implements MessageFactory {
      */
     public void addFactory(String beginString, Class<? extends MessageFactory> factoryClass) {
         try {
-            MessageFactory factory = factoryClass.newInstance();
+            MessageFactory factory = factoryClass.getDeclaredConstructor().newInstance();
             messageFactories.put(beginString, factory);
         } catch (Exception e) {
             throw new RuntimeException("can't instantiate " + factoryClass.getName(), e);

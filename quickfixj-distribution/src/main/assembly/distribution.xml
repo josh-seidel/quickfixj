@@ -45,7 +45,7 @@
 	<dependencySets>
 		<!-- all modules in root folder -->
 		<dependencySet>
-			<outputDirectory>/</outputDirectory>
+			<outputDirectory></outputDirectory>
 			<useProjectArtifact>false</useProjectArtifact>
 			<includes>
 				<include>org.quickfixj:*</include>
@@ -70,7 +70,7 @@
 		<!-- metadata files in root folder -->
 		<fileSet>
 			<directory>${parent.basedir}</directory>
-			<outputDirectory>/</outputDirectory>
+			<outputDirectory></outputDirectory>
 			<includes>
 				<include>LICENSE*</include>
 				<include>README*</include>
@@ -79,7 +79,7 @@
 		<!-- source archive in root folder -->
 		<fileSet>
 			<directory>${project.build.directory}</directory>
-			<outputDirectory>/</outputDirectory>
+			<outputDirectory></outputDirectory>
 			<includes>
 				<include>${groupId}-${version}-src.zip</include>
 			</includes>
@@ -87,7 +87,7 @@
 		<!-- SQL scripts in etc/sql folder -->
 		<fileSet>
 			<directory>${parent.basedir}/quickfixj-core/src/main/resources/config</directory>
-			<outputDirectory>/etc</outputDirectory>
+			<outputDirectory>etc</outputDirectory>
 			<includes>
 				<include>sql/**</include>
 			</includes>
@@ -95,7 +95,7 @@
 		<!-- user manual in doc/usermanual folder -->
 		<fileSet>
 			<directory>${parent.basedir}/quickfixj-core/src/main/doc</directory>
-			<outputDirectory>/doc</outputDirectory>
+			<outputDirectory>doc</outputDirectory>
 			<includes>
 				<include>usermanual/**</include>
 			</includes>
@@ -103,7 +103,7 @@
 		<!-- javadocs in doc/api folder -->
 		<fileSet>
 			<directory>${project.build.directory}/site/apidocs</directory>
-			<outputDirectory>/doc/api</outputDirectory>
+			<outputDirectory>doc/api</outputDirectory>
 		</fileSet>
 	</fileSets>
 </assembly>

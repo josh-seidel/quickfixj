@@ -35,22 +35,19 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
-            <!-- version>1.3</version -->
-            <!--  To get to 1.3, quickfixj-core/src/test/java/quickfix/MessageUtilsTest.java:[176,9],[191,9],[208,9]: no suitable method found for assertThat(quickfix.Message,org.hamcrest.Matcher -->
-            <!--  And to get to 1.3, quickfixj-core/src/test/java/quickfix/DefaultDataDictionaryProviderTest.java:[80,13]: no suitable method found for assertThat(java.lang.Throwable,org.hamcrest.Matcher  -->
             <version>1.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <version>1.8.0.10</version>
+            <version>1.8.1.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>tyrex</groupId>
             <artifactId>tyrex</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -348,9 +345,9 @@
                             <goal>jar</goal>
                         </goals>
                         <configuration>
-                            <additionalOptions>-Xdoclint:none</additionalOptions>
+                            <additionalOptions>-html5</additionalOptions>
                             <doclint>none</doclint>
-                            <maxmemory>3g</maxmemory>
+                            <maxmemory>4g</maxmemory>
                             <includeDependencySources>false</includeDependencySources>
                             <!-- we do not want to have javadoc for the field and message classes in the core module -->
                             <sourcepath>src/main/java:target/generated-sources</sourcepath>

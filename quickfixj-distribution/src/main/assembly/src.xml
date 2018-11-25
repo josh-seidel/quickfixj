@@ -7,7 +7,7 @@
 	</formats>
 	<fileSets>
 		<fileSet>
-			<outputDirectory>/</outputDirectory>
+			<outputDirectory></outputDirectory>
 			<directory>${project.parent.basedir}</directory>
 			<useDefaultExcludes>true</useDefaultExcludes>
 			<includes>

@@ -531,7 +531,7 @@ public class DataDictionary {
             if (value instanceof Collection) {
                 Collection<V> copy;
                 try {
-                    copy = (Collection<V>) value.getClass().newInstance();
+                    copy = (Collection<V>) value.getClass().getDeclaredConstructor().newInstance();
                 } catch (final RuntimeException e) {
                     throw e;
                 } catch (final Exception e) {

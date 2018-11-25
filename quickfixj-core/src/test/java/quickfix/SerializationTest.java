@@ -142,7 +142,7 @@ public class SerializationTest extends TestCase {
         try {
             Class<?> cl = Class.forName(className);
             res = createMessageWithDefaultValues(cl, maxGroupElts);
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             fail(e.getMessage());
         }
         return res;
@@ -152,8 +152,8 @@ public class SerializationTest extends TestCase {
         Object res = null;
         try {
             Class<?> cl = Class.forName(className);
-            res = cl.newInstance();
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            res = cl.getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             fail(e.getMessage());
         }
         return res;
@@ -226,7 +226,7 @@ public class SerializationTest extends TestCase {
 
     // Default values creation
     private static Message createMessageWithDefaultValues(Class<?> cl, int maxGroupElts)
-            throws InstantiationException, IllegalAccessException {
+            throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         // Setting Fields
         Message res = (Message) createFieldMapWithDefaultValues(cl);
 
@@ -253,13 +253,13 @@ public class SerializationTest extends TestCase {
     }
 
     private static Group createGroupWithDefaultValues(Class<?> cl) throws InstantiationException,
-            IllegalAccessException {
+            IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         return (Group) createFieldMapWithDefaultValues(cl);
     }
 
     private static FieldMap createFieldMapWithDefaultValues(Class<?> cl) throws InstantiationException,
-            IllegalAccessException {
-        FieldMap res = (FieldMap) cl.newInstance();
+            IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        FieldMap res = (FieldMap) cl.getDeclaredConstructor().newInstance();
 
         final String SET_METHOD = "set";
         final String GET_METHOD = "get";

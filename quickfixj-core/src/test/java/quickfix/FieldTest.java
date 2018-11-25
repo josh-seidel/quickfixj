@@ -159,13 +159,13 @@ public class FieldTest {
         field.setValue(12.3);
         assertEquals(11, field.getTag());
         assertEquals(12.3, field.getValue(), 0);
-        field.setValue(new Double(23.4));
+        field.setValue(Double.valueOf(23.4));
         assertEquals(11, field.getTag());
         assertEquals(23.4, field.getValue(), 0);
         field = new DoubleField(22, 34.5);
         assertEquals(22, field.getTag());
         assertEquals(34.5, field.getValue(), 0);
-        field = new DoubleField(33, new Double(45.6));
+        field = new DoubleField(33, Double.valueOf(45.6));
         assertEquals(33, field.getTag());
         assertEquals(45.6, field.getValue(), 0);
     }
