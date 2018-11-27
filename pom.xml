@@ -140,7 +140,7 @@
 						<source>${jdkLevel}</source>
 						<target>${jdkLevel}</target>
 						<meminitial>2g</meminitial>
-						<maxmem>8g</maxmem>
+						<maxmem>4g</maxmem>
 						<compilerArgs>
 							<arg>-Xlint:deprecation</arg>
 						</compilerArgs>
@@ -199,7 +199,7 @@
 							<configuration>
 								<additionalOptions>-html5</additionalOptions>
 								<doclint>none</doclint>
-							    <maxmemory>4g</maxmemory>
+							    <maxmemory>2g</maxmemory>
 							</configuration>
 						</execution>
 					</executions>

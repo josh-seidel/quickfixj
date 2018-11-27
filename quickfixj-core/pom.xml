@@ -347,7 +347,7 @@
                         <configuration>
                             <additionalOptions>-html5</additionalOptions>
                             <doclint>none</doclint>
-                            <maxmemory>4g</maxmemory>
+                            <maxmemory>2g</maxmemory>
                             <includeDependencySources>false</includeDependencySources>
                             <!-- we do not want to have javadoc for the field and message classes in the core module -->
                             <sourcepath>src/main/java:target/generated-sources</sourcepath>
