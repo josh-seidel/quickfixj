@@ -68,7 +68,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<jdkLevel>11</jdkLevel>
+		<jdkLevel>10</jdkLevel>
 		<slf4j.version>1.8.0-beta2</slf4j.version>
 		<slf4j.api.version>1.8.0-beta2-osgi</slf4j.api.version>
 		<quickfix.junit.version>4.12</quickfix.junit.version>
