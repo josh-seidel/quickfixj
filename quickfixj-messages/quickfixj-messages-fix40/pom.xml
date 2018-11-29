@@ -75,7 +75,7 @@
 							<instructions>
 								<Export-Package>quickfix.field;version="${project.version}";uses:=quickfix,quickfix.fix40;version="${project.version}";uses:=quickfix,quickfix.field;version="${project.version}"</Export-Package>
 								<Import-Package>quickfix,quickfix.field;version="${project.version}"</Import-Package>
-								<Require-Capability>osgi.ee;filter:="(&#38;(osgi.ee=JavaSE)(version=1.${jdkLevel}))"</Require-Capability>
+								<Require-Capability>osgi.ee;filter:="(&#38;(osgi.ee=JavaSE)(version>=${jdkLevel}))"</Require-Capability>
 							</instructions>
 						</configuration>
 					</execution>
