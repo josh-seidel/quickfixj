@@ -217,13 +217,12 @@ public class Generator {
         }
     }
 
-    private MsgType getNextMsgType(Map<String, MsgType> msgTypes) {
+    private static MsgType getNextMsgType(Map<String, MsgType> msgTypes) {
         Iterator<MsgType> it = msgTypes.values().iterator();
         if(it.hasNext()) {
             return it.next();
-        } else {
-            throw new RuntimeException("Message type not found. Check the MsgType.xml file.");
         }
+		throw new RuntimeException("Message type not found. Check the MsgType.xml file.");
     }
 
     private void addMsgContents(StringBuilder builder, List<Object> msgContents, String prefix) {

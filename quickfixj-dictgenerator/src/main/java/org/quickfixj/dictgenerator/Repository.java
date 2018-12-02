@@ -170,12 +170,11 @@ public class Repository {
         System.out.println(getClass().getSimpleName() + ": " + allFields.size() + " Fields found");
     }
 
-    private String getSingleNodeTextSafe(Node node, String tag) {
+    private static String getSingleNodeTextSafe(Node node, String tag) {
         Node nodeWithTag = node.selectSingleNode(tag);
         if(nodeWithTag != null)
             return nodeWithTag.getText();
-        else
-            throw new RuntimeException("Node with tag "+tag+" not found in "+node.getPath());
+		throw new RuntimeException("Node with tag "+tag+" not found in "+node.getPath());
     }
 
     private void initComponents() {
