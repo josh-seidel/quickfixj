@@ -312,7 +312,8 @@ public abstract class AbstractSocketAcceptor extends SessionConnector implements
             this.acceptorSessions = acceptorSessions;
         }
 
-        public Session getSession(SessionID sessionID, SessionConnector connector) {
+        @Override
+		public Session getSession(SessionID sessionID, SessionConnector connector) {
             return acceptorSessions.get(sessionID);
         }
     }
@@ -332,7 +333,8 @@ public abstract class AbstractSocketAcceptor extends SessionConnector implements
             this.acceptorSessions = acceptorSessions;
         }
 
-        public Session getSession(SessionID sessionID, SessionConnector ignored) {
+        @Override
+		public Session getSession(SessionID sessionID, SessionConnector ignored) {
             Session session = acceptorSessions.get(sessionID);
             if (session == null) {
                 SessionID reduced = reduceSessionID(sessionID);

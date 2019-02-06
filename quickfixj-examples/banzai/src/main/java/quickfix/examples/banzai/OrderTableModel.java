@@ -52,7 +52,8 @@ public class OrderTableModel extends AbstractTableModel {
                    "Target"};
     }
 
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
+    @Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
         return false;
     }
 
@@ -106,25 +107,31 @@ public class OrderTableModel extends AbstractTableModel {
         return rowToOrder.get(row);
     }
 
-    public void setValueAt(Object value, int rowIndex, int columnIndex) { }
+    @Override
+	public void setValueAt(Object value, int rowIndex, int columnIndex) { }
 
-    public Class<String> getColumnClass(int columnIndex) {
+    @Override
+	public Class<String> getColumnClass(int columnIndex) {
         return String.class;
     }
 
-    public int getRowCount() {
+    @Override
+	public int getRowCount() {
         return rowToOrder.size();
     }
 
-    public int getColumnCount() {
+    @Override
+	public int getColumnCount() {
         return headers.length;
     }
 
-    public String getColumnName(int columnIndex) {
+    @Override
+	public String getColumnName(int columnIndex) {
         return headers[columnIndex];
     }
 
-    public Object getValueAt(int rowIndex, int columnIndex) {
+    @Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
         Order order = rowToOrder.get(rowIndex);
         switch (columnIndex) {
         case SYMBOL:

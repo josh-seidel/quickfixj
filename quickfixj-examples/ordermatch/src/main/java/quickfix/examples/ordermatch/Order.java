@@ -122,7 +122,8 @@ public class Order {
         lastExecutedQuantity = quantity;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return (side == Side.BUY ? "BUY" : "SELL") + " " + quantity + "@$" + price + " (" + openQuantity + ")";
     }
 

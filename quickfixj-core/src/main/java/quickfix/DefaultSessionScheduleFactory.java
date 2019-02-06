@@ -24,7 +24,8 @@ package quickfix;
  */
 public class DefaultSessionScheduleFactory implements SessionScheduleFactory {
 
-    public SessionSchedule create(SessionID sessionID, SessionSettings settings) throws ConfigError
+    @Override
+	public SessionSchedule create(SessionID sessionID, SessionSettings settings) throws ConfigError
     {
         try {
             return new DefaultSessionSchedule(settings, sessionID);

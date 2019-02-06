@@ -34,47 +34,58 @@ public class NoopStore implements MessageStore {
     private int nextSenderMsgSeqNum = 1;
     private int nextTargetMsgSeqNum = 1;
 
-    public void get(int startSequence, int endSequence, Collection<String> messages) {
+    @Override
+	public void get(int startSequence, int endSequence, Collection<String> messages) {
     }
 
-    public Date getCreationTime() {
+    @Override
+	public Date getCreationTime() {
         return creationTime;
     }
 
-    public int getNextSenderMsgSeqNum() {
+    @Override
+	public int getNextSenderMsgSeqNum() {
         return nextSenderMsgSeqNum;
     }
 
-    public int getNextTargetMsgSeqNum() {
+    @Override
+	public int getNextTargetMsgSeqNum() {
         return nextTargetMsgSeqNum;
     }
 
-    public void incrNextSenderMsgSeqNum() {
+    @Override
+	public void incrNextSenderMsgSeqNum() {
         nextSenderMsgSeqNum++;
     }
 
-    public void incrNextTargetMsgSeqNum() {
+    @Override
+	public void incrNextTargetMsgSeqNum() {
         nextTargetMsgSeqNum++;
     }
 
-    public void reset() {
+    @Override
+	public void reset() {
         creationTime = new Date();
         nextSenderMsgSeqNum = 1;
         nextTargetMsgSeqNum = 1;
     }
 
-    public boolean set(int sequence, String message) {
+    @Override
+	public boolean set(int sequence, String message) {
         return true;
     }
 
-    public void setNextSenderMsgSeqNum(int next) {
+    @Override
+	public void setNextSenderMsgSeqNum(int next) {
         nextSenderMsgSeqNum = next;
     }
 
-    public void setNextTargetMsgSeqNum(int next) {
+    @Override
+	public void setNextTargetMsgSeqNum(int next) {
         nextTargetMsgSeqNum = next;
     }
 
-    public void refresh() {
+    @Override
+	public void refresh() {
     }
 }

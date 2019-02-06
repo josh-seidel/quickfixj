@@ -28,58 +28,59 @@ package quickfix;
  */
 public class FileStoreFactory implements MessageStoreFactory {
 
-    /**
-     * File path for writing the message store.
-     */
-    public static final String SETTING_FILE_STORE_PATH = "FileStorePath";
+	/**
+	 * File path for writing the message store.
+	 */
+	public static final String SETTING_FILE_STORE_PATH = "FileStorePath";
 
-    /**
-     * Boolean option for controlling whether the FileStore syncs to the hard
-     * drive on every write. It's safer to sync, but it's also much slower (100x
-     * or more slower in some cases).
-     */
-    public static final String SETTING_FILE_STORE_SYNC = "FileStoreSync";
+	/**
+	 * Boolean option for controlling whether the FileStore syncs to the hard
+	 * drive on every write. It's safer to sync, but it's also much slower (100x
+	 * or more slower in some cases).
+	 */
+	public static final String SETTING_FILE_STORE_SYNC = "FileStoreSync";
 
-    /**
-     * Numeric option limiting the number of messages stored in the in-memory
-     * message index. If, during recovery, one or more messages are requested
-     * whose offset/size is not cached in memory, the on-disk header file will
-     * be searched. Values can be from 0 to Integer.MAX_VALUE (default), inclusive.
-     */
-    public static final String SETTING_FILE_STORE_MAX_CACHED_MSGS = "FileStoreMaxCachedMsgs";
+	/**
+	 * Numeric option limiting the number of messages stored in the in-memory
+	 * message index. If, during recovery, one or more messages are requested
+	 * whose offset/size is not cached in memory, the on-disk header file will
+	 * be searched. Values can be from 0 to Integer.MAX_VALUE (default), inclusive.
+	 */
+	public static final String SETTING_FILE_STORE_MAX_CACHED_MSGS = "FileStoreMaxCachedMsgs";
 
-    protected final SessionSettings settings;
+	protected final SessionSettings settings;
 
-    /**
-     * Create the factory with configuration in session settings.
-     *
-     * @param settings
-     */
-    public FileStoreFactory(SessionSettings settings) {
-        this.settings = settings;
-    }
+	/**
+	 * Create the factory with configuration in session settings.
+	 *
+	 * @param settings
+	 */
+	public FileStoreFactory(SessionSettings settings) {
+		this.settings = settings;
+	}
 
-    /**
-     * Creates a file-based message store.
-     *
-     * @param sessionID session ID for the message store.
-     */
-    public MessageStore create(SessionID sessionID) {
-        try {
-            boolean syncWrites = false;
-            if (settings.isSetting(sessionID, SETTING_FILE_STORE_SYNC)) {
-                syncWrites = settings.getBool(sessionID, SETTING_FILE_STORE_SYNC);
-            }
-            int maxCachedMsgs = 10000;
-            if (settings.isSetting(sessionID, SETTING_FILE_STORE_MAX_CACHED_MSGS)) {
-                long maxCachedMsgsSetting = settings.getLong(sessionID, SETTING_FILE_STORE_MAX_CACHED_MSGS);
-                if (maxCachedMsgsSetting >= 0 && maxCachedMsgsSetting <= (long) Integer.MAX_VALUE) {
-                    maxCachedMsgs = (int) maxCachedMsgsSetting;
-                }
-            }
-            return new FileStore(settings.getString(sessionID, FileStoreFactory.SETTING_FILE_STORE_PATH), sessionID, syncWrites, maxCachedMsgs);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+	/**
+	 * Creates a file-based message store.
+	 *
+	 * @param sessionID session ID for the message store.
+	 */
+	@Override
+	public MessageStore create(SessionID sessionID) {
+		try {
+			boolean syncWrites = false;
+			if (settings.isSetting(sessionID, SETTING_FILE_STORE_SYNC)) {
+				syncWrites = settings.getBool(sessionID, SETTING_FILE_STORE_SYNC);
+			}
+			int maxCachedMsgs = 10000;
+			if (settings.isSetting(sessionID, SETTING_FILE_STORE_MAX_CACHED_MSGS)) {
+				long maxCachedMsgsSetting = settings.getLong(sessionID, SETTING_FILE_STORE_MAX_CACHED_MSGS);
+				if (maxCachedMsgsSetting >= 0 && maxCachedMsgsSetting <= Integer.MAX_VALUE) {
+					maxCachedMsgs = (int) maxCachedMsgsSetting;
+				}
+			}
+			return new FileStore(settings.getString(sessionID, FileStoreFactory.SETTING_FILE_STORE_PATH), sessionID, syncWrites, maxCachedMsgs);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

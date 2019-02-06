@@ -159,7 +159,8 @@ public class CachedFileStore implements MessageStore {
      * (non-Javadoc)
      * @see quickfix.MessageStore#getCreationTime()
      */
-    public Date getCreationTime() throws IOException {
+    @Override
+	public Date getCreationTime() throws IOException {
         return cache.getCreationTime();
     }
 
@@ -242,7 +243,8 @@ public class CachedFileStore implements MessageStore {
      * (non-Javadoc)
      * @see quickfix.MessageStore#getNextSenderMsgSeqNum()
      */
-    public int getNextSenderMsgSeqNum() throws IOException {
+    @Override
+	public int getNextSenderMsgSeqNum() throws IOException {
         return cache.getNextSenderMsgSeqNum();
     }
 
@@ -250,7 +252,8 @@ public class CachedFileStore implements MessageStore {
      * (non-Javadoc)
      * @see quickfix.MessageStore#getNextTargetMsgSeqNum()
      */
-    public int getNextTargetMsgSeqNum() throws IOException {
+    @Override
+	public int getNextTargetMsgSeqNum() throws IOException {
         return cache.getNextTargetMsgSeqNum();
     }
 
@@ -258,7 +261,8 @@ public class CachedFileStore implements MessageStore {
      * (non-Javadoc)
      * @see quickfix.MessageStore#setNextSenderMsgSeqNum(int)
      */
-    public void setNextSenderMsgSeqNum(int next) throws IOException {
+    @Override
+	public void setNextSenderMsgSeqNum(int next) throws IOException {
         cache.setNextSenderMsgSeqNum(next);
         storeSequenceNumbers();
     }
@@ -267,7 +271,8 @@ public class CachedFileStore implements MessageStore {
      * (non-Javadoc)
      * @see quickfix.MessageStore#setNextTargetMsgSeqNum(int)
      */
-    public void setNextTargetMsgSeqNum(int next) throws IOException {
+    @Override
+	public void setNextTargetMsgSeqNum(int next) throws IOException {
         cache.setNextTargetMsgSeqNum(next);
         storeSequenceNumbers();
     }
@@ -276,7 +281,8 @@ public class CachedFileStore implements MessageStore {
      * (non-Javadoc)
      * @see quickfix.MessageStore#incrNextSenderMsgSeqNum()
      */
-    public void incrNextSenderMsgSeqNum() throws IOException {
+    @Override
+	public void incrNextSenderMsgSeqNum() throws IOException {
         cache.incrNextSenderMsgSeqNum();
         storeSequenceNumbers();
     }
@@ -285,7 +291,8 @@ public class CachedFileStore implements MessageStore {
      * (non-Javadoc)
      * @see quickfix.MessageStore#incrNextTargetMsgSeqNum()
      */
-    public void incrNextTargetMsgSeqNum() throws IOException {
+    @Override
+	public void incrNextTargetMsgSeqNum() throws IOException {
         cache.incrNextTargetMsgSeqNum();
         storeSequenceNumbers();
     }
@@ -294,7 +301,8 @@ public class CachedFileStore implements MessageStore {
      * (non-Javadoc)
      * @see quickfix.MessageStore#get(int, int, java.util.Collection)
      */
-    public void get(int startSequence, int endSequence, Collection<String> messages)
+    @Override
+	public void get(int startSequence, int endSequence, Collection<String> messages)
             throws IOException {
         final Collection<String> readedMsg = getMessage(startSequence, endSequence);
         messages.addAll(readedMsg);
@@ -339,7 +347,8 @@ public class CachedFileStore implements MessageStore {
      * (non-Javadoc)
      * @see quickfix.MessageStore#set(int, java.lang.String)
      */
-    public boolean set(int sequence, String message) throws IOException {
+    @Override
+	public boolean set(int sequence, String message) throws IOException {
         final long offset = messageFileWriter.getFilePointer();
         final int size = message.length();
         messageIndex.put((long) sequence, new long[] { offset, size });
@@ -380,7 +389,8 @@ public class CachedFileStore implements MessageStore {
      * (non-Javadoc)
      * @see quickfix.RefreshableMessageStore#refresh()
      */
-    public void refresh() throws IOException {
+    @Override
+	public void refresh() throws IOException {
         initialize(false);
     }
 
@@ -388,7 +398,8 @@ public class CachedFileStore implements MessageStore {
      * (non-Javadoc)
      * @see quickfix.MessageStore#reset()
      */
-    public void reset() throws IOException {
+    @Override
+	public void reset() throws IOException {
         initialize(true);
     }
 
@@ -408,24 +419,29 @@ public class CachedFileStore implements MessageStore {
             maxSize = _maxSize;
         }
 
-        public void clear() {
+        @Override
+		public void clear() {
             cacheIndex.clear();
             currentSize = 0;
         }
 
-        public boolean containsKey(Object key) {
+        @Override
+		public boolean containsKey(Object key) {
             return cacheIndex.containsKey(key);
         }
 
-        public boolean containsValue(Object value) {
+        @Override
+		public boolean containsValue(Object value) {
             return cacheIndex.containsValue(value);
         }
 
-        public Set<java.util.Map.Entry<Long, long[]>> entrySet() {
+        @Override
+		public Set<java.util.Map.Entry<Long, long[]>> entrySet() {
             return cacheIndex.entrySet();
         }
 
-        public long[] get(Object key) {
+        @Override
+		public long[] get(Object key) {
             final long[] v = cacheIndex.get(key);
             if (v != null) {
                 return v;
@@ -433,15 +449,18 @@ public class CachedFileStore implements MessageStore {
             return seekMessageIndex((Long) key);
         }
 
-        public boolean isEmpty() {
+        @Override
+		public boolean isEmpty() {
             return cacheIndex.isEmpty();
         }
 
-        public Set<Long> keySet() {
+        @Override
+		public Set<Long> keySet() {
             return cacheIndex.keySet();
         }
 
-        public long[] put(Long key, long[] value) {
+        @Override
+		public long[] put(Long key, long[] value) {
             cacheIndex.put(key, value);
             currentSize++;
             if (currentSize > maxSize) {
@@ -453,19 +472,23 @@ public class CachedFileStore implements MessageStore {
             return value;
         }
 
-        public void putAll(Map<? extends Long, ? extends long[]> t) {
+        @Override
+		public void putAll(Map<? extends Long, ? extends long[]> t) {
             throw new UnsupportedOperationException("not supported");
         }
 
-        public long[] remove(Object key) {
+        @Override
+		public long[] remove(Object key) {
             throw new UnsupportedOperationException("not supported");
         }
 
-        public int size() {
+        @Override
+		public int size() {
             return cacheIndex.size();
         }
 
-        public Collection<long[]> values() {
+        @Override
+		public Collection<long[]> values() {
             return cacheIndex.values();
         }
 

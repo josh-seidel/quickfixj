@@ -27,39 +27,39 @@ import java.util.ArrayList;
  */
 public final class NumbersCache {
 
-    private static final int LITTLE_NUMBERS_LENGTH = 100000;
-    private static final ArrayList<String> LITTLE_NUMBERS;
+	private static final int LITTLE_NUMBERS_LENGTH = 100000;
+	private static final ArrayList<String> LITTLE_NUMBERS;
 
-    static {
-        LITTLE_NUMBERS = new ArrayList<>(LITTLE_NUMBERS_LENGTH);
-        for (int i = 0; i < LITTLE_NUMBERS_LENGTH; i++)
-            LITTLE_NUMBERS.add(Integer.toString(i));
-    }
+	static {
+		LITTLE_NUMBERS = new ArrayList<>(LITTLE_NUMBERS_LENGTH);
+		for (int i = 0; i < LITTLE_NUMBERS_LENGTH; i++)
+			LITTLE_NUMBERS.add(Integer.toString(i));
+	}
 
-    /**
-     * Get the String representing the given number
-     *
-     * @param i the long to convert
-     * @return the String representing the long
-     */
-    public static String get(int i) {
-        if (i < LITTLE_NUMBERS_LENGTH)
-            return LITTLE_NUMBERS.get(i);
-        return String.valueOf(i);
-    }
+	/**
+	 * Get the String representing the given number
+	 *
+	 * @param i the long to convert
+	 * @return the String representing the long
+	 */
+	public static String get(int i) {
+		if (i < LITTLE_NUMBERS_LENGTH)
+			return LITTLE_NUMBERS.get(i);
+		return String.valueOf(i);
+	}
 
 
-     /**
-      * Get the string representing the given double if it's an integer
-      *
-      * @param d the double to convert
-      * @return the String representing the double or null if the double is not an integer
-      */
-    public static String get(double d) {
-        long l = (long)d;
-        if (d == (double)l)
-            return get(l);
-        return null;
-	  }
+	 /**
+	  * Get the string representing the given double if it's an integer
+	  *
+	  * @param d the double to convert
+	  * @return the String representing the double or null if the double is not an integer
+	  */
+	public static String get(double d) {
+		long l = (long)d;
+		if (d == l)
+			return get(l);
+		return null;
+	}
 
 }

@@ -33,7 +33,8 @@ public class JdbcLogFactory implements LogFactory {
      *
      * @param sessionID the sessionID for the message store.
      */
-    public Log create(SessionID sessionID) {
+    @Override
+	public Log create(SessionID sessionID) {
         try {
             return new JdbcLog(settings, sessionID, dataSource);
         } catch (Exception e) {

@@ -82,7 +82,8 @@ public class SocketAcceptorAdmin extends ConnectorAdmin implements SocketAccepto
         }
     }
 
-    public TabularData getAcceptorAddresses() throws IOException {
+    @Override
+	public TabularData getAcceptorAddresses() throws IOException {
         List<SessionAcceptorAddressRow> rows = new ArrayList<>();
         for (Map.Entry<SessionID, SocketAddress> entry : acceptor.getAcceptorAddresses().entrySet()) {
             SessionID sessionID = entry.getKey();
@@ -97,7 +98,8 @@ public class SocketAcceptorAdmin extends ConnectorAdmin implements SocketAccepto
         }
     }
 
-    public int getQueueSize() {
+    @Override
+	public int getQueueSize() {
         return acceptor.getQueueSize();
     }
 

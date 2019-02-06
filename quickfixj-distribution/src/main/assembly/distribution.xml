@@ -8,8 +8,16 @@
 	<moduleSets>
 		<!-- all modules' dependencies in lib folder -->
 		<moduleSet>
+			<includeSubModules>true</includeSubModules>
 			<useAllReactorProjects>true</useAllReactorProjects>
-			<includes/>
+			<includes>
+				<include>org.quickfixj:quickfixj-*</include>
+			</includes>
+			<excludes>
+				<!-- Exclude quickfixj-all since it does not have a proper MANIFEST.MF that is built and includes all the details of its components. -->
+				<!-- Handle the bunles individually. -->
+				<exclude>org.quickfixj:quickfixj-all</exclude>
+			</excludes>
 			<binaries>
 				<unpack>false</unpack>
 				<dependencySets>
@@ -20,7 +28,7 @@
 							<!-- quickfixj artifacts which are included in root folder separately -->
 							<exclude>org.quickfixj:*</exclude>
 							<!-- maven plugin api and dependencies used by code generator
-							     but not required for non-maven standalone runtime -->
+								but not required for non-maven standalone runtime -->
 							<exclude>org.apache.maven*:*</exclude>
 							<exclude>org.codehaus.plexus:*</exclude>
 							<exclude>classworlds:*</exclude>

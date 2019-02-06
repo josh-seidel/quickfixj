@@ -196,7 +196,8 @@ public class OrderEntryPanel extends JPanel implements Observer {
     }
 
     private class PriceListener implements ItemListener {
-        public void itemStateChanged(ItemEvent e) {
+        @Override
+		public void itemStateChanged(ItemEvent e) {
             OrderType item = (OrderType) typeComboBox.getSelectedItem();
             if (item == OrderType.MARKET) {
                 enableLimitPrice(false);
@@ -231,7 +232,8 @@ public class OrderEntryPanel extends JPanel implements Observer {
         }
     }
 
-    public void update(Observable o, Object arg) {
+    @Override
+	public void update(Observable o, Object arg) {
         LogonEvent logonEvent = (LogonEvent) arg;
         if (logonEvent.isLoggedOn())
             sessionComboBox.addItem(logonEvent.getSessionID());
@@ -240,7 +242,8 @@ public class OrderEntryPanel extends JPanel implements Observer {
     }
 
     private class SubmitListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
+        @Override
+		public void actionPerformed(ActionEvent e) {
             Order order = new Order();
             order.setSide((OrderSide) sideComboBox.getSelectedItem());
             order.setType((OrderType) typeComboBox.getSelectedItem());
@@ -263,7 +266,8 @@ public class OrderEntryPanel extends JPanel implements Observer {
     }
 
     private class SubmitActivator implements KeyListener, ItemListener {
-        public void keyReleased(KeyEvent e) {
+        @Override
+		public void keyReleased(KeyEvent e) {
             Object obj = e.getSource();
             if (obj == symbolTextField) {
                 symbolEntered = testField(obj);
@@ -277,7 +281,8 @@ public class OrderEntryPanel extends JPanel implements Observer {
             activateSubmit();
         }
 
-        public void itemStateChanged(ItemEvent e) {
+        @Override
+		public void itemStateChanged(ItemEvent e) {
             sessionEntered = sessionComboBox.getSelectedItem() != null;
             activateSubmit();
         }
@@ -288,8 +293,10 @@ public class OrderEntryPanel extends JPanel implements Observer {
             return value.length() > 0;
         }
 
-        public void keyTyped(KeyEvent e) {}
+        @Override
+		public void keyTyped(KeyEvent e) {}
 
-        public void keyPressed(KeyEvent e) {}
+        @Override
+		public void keyPressed(KeyEvent e) {}
     }
 }

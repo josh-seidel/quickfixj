@@ -82,7 +82,8 @@ abstract class ConnectorAdmin implements ConnectorAdminMBean, MBeanRegistration 
         this.connector = connector;
     }
 
-    public String getRole() {
+    @Override
+	public String getRole() {
         return role;
     }
 
@@ -113,7 +114,8 @@ abstract class ConnectorAdmin implements ConnectorAdminMBean, MBeanRegistration 
         }
     }
 
-    public TabularData getSessions() throws IOException {
+    @Override
+	public TabularData getSessions() throws IOException {
         List<ConnectorSession> sessions = new ArrayList<>();
         for (SessionID sessionID : connector.getSessions()) {
             Session session = Session.lookupSession(sessionID);
@@ -141,12 +143,14 @@ abstract class ConnectorAdmin implements ConnectorAdminMBean, MBeanRegistration 
         return sessions.toArray(new ObjectName[sessions.size()]);
     }
 
-    public void stop(boolean force) {
+    @Override
+	public void stop(boolean force) {
         log.info("JMX operation: stop {} {}", getRole(), this);
         connector.stop(force);
     }
 
-    public String getHostName() {
+    @Override
+	public String getHostName() {
         try {
             return InetAddress.getLocalHost().getCanonicalHostName();
         } catch (UnknownHostException e) {
@@ -154,16 +158,19 @@ abstract class ConnectorAdmin implements ConnectorAdminMBean, MBeanRegistration 
         }
     }
 
-    public void stop() {
+    @Override
+	public void stop() {
         stop(false);
     }
 
-    public ObjectName preRegister(MBeanServer server, ObjectName name) throws Exception {
+    @Override
+	public ObjectName preRegister(MBeanServer server, ObjectName name) throws Exception {
         this.mbeanServer = server;
         return name;
     }
 
-    public void postRegister(Boolean registrationDone) {
+    @Override
+	public void postRegister(Boolean registrationDone) {
         if (connector instanceof SessionConnector) {
             ((SessionConnector) connector).addPropertyChangeListener(evt -> {
                 if (SessionConnector.SESSIONS_PROPERTY.equals(evt.getPropertyName())) {
@@ -191,10 +198,12 @@ abstract class ConnectorAdmin implements ConnectorAdminMBean, MBeanRegistration 
         }
     }
 
-    public void preDeregister() throws Exception {
+    @Override
+	public void preDeregister() throws Exception {
     }
 
-    public void postDeregister() {
+    @Override
+	public void postDeregister() {
         for (ObjectName sessionName : sessionNames) {
             try {
                 mbeanServer.unregisterMBean(sessionName);

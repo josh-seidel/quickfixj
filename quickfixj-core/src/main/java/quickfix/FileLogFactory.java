@@ -66,7 +66,8 @@ public class FileLogFactory implements LogFactory {
      *
      * @param sessionID session ID for the logger
      */
-    public Log create(SessionID sessionID) {
+    @Override
+	public Log create(SessionID sessionID) {
         try {
             boolean includeMillis = false;
             if (settings.isSetting(sessionID, SETTING_INCLUDE_MILLIS_IN_TIMESTAMP)) {

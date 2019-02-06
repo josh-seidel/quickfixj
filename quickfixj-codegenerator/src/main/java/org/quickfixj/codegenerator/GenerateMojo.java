@@ -113,7 +113,8 @@ public class GenerateMojo extends AbstractMojo {
      *
      * @see org.apache.maven.plugin.AbstractMojo#execute()
      */
-    public void execute() throws MojoExecutionException {
+    @Override
+	public void execute() throws MojoExecutionException {
 
         if (!outputDirectory.exists()) {
             FileUtils.mkdir(outputDirectory.getAbsolutePath());

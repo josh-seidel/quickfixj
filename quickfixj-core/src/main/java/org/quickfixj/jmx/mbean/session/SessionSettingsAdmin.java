@@ -54,11 +54,13 @@ public class SessionSettingsAdmin implements DynamicMBean {
         this.settings = p;
     }
 
-    public Object getAttribute(String attribute) {
+    @Override
+	public Object getAttribute(String attribute) {
         return settings.get(attribute);
     }
 
-    public AttributeList getAttributes(String[] attributeNames) {
+    @Override
+	public AttributeList getAttributes(String[] attributeNames) {
         AttributeList attributeList = new AttributeList();
         for (String attributeName : attributeNames) {
             attributeList.add(new Attribute(attributeName, getAttribute(attributeName)));
@@ -66,7 +68,8 @@ public class SessionSettingsAdmin implements DynamicMBean {
         return attributeList;
     }
 
-    public MBeanInfo getMBeanInfo() {
+    @Override
+	public MBeanInfo getMBeanInfo() {
         List<MBeanAttributeInfo> attributeInfos = new ArrayList<>();
         for (Map.Entry<Object, Object> entry : settings.entrySet()) {
             String name = (String) entry.getKey();
@@ -77,15 +80,18 @@ public class SessionSettingsAdmin implements DynamicMBean {
                 .toArray(new MBeanAttributeInfo[attributeInfos.size()]), null, null, null);
     }
 
-    public Object invoke(String method, Object[] arguments, String[] params) throws MBeanException, ReflectionException {
+    @Override
+	public Object invoke(String method, Object[] arguments, String[] params) throws MBeanException, ReflectionException {
         return null;
     }
 
-    public void setAttribute(Attribute attribute) throws AttributeNotFoundException, InvalidAttributeValueException, MBeanException,
+    @Override
+	public void setAttribute(Attribute attribute) throws AttributeNotFoundException, InvalidAttributeValueException, MBeanException,
             ReflectionException {
     }
 
-    public AttributeList setAttributes(AttributeList attributes) {
+    @Override
+	public AttributeList setAttributes(AttributeList attributes) {
         return null;
     }
 

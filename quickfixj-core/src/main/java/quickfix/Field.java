@@ -84,7 +84,8 @@ public /*abstract*/ class Field<T> implements Serializable {
      *
      * @return the formatted field
      */
-    public String toString() {
+    @Override
+	public String toString() {
         calculate();
         return data;
     }
@@ -100,14 +101,16 @@ public /*abstract*/ class Field<T> implements Serializable {
         return object.toString();
     }
 
-    public boolean equals(Object object) {
+    @Override
+	public boolean equals(Object object) {
         return super.equals(object)
                 || object instanceof Field
                    && tag == ((Field<?>) object).getField()
                    && getObject().equals(((Field<?>) object).getObject());
     }
 
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return object.hashCode();
     }
 

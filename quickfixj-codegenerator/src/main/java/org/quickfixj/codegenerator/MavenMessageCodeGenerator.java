@@ -33,15 +33,18 @@ public class MavenMessageCodeGenerator extends MessageCodeGenerator {
         this.log = log;
     }
 
-    protected void logInfo(String msg) {
+    @Override
+	protected void logInfo(String msg) {
         log.info(msg);
     }
 
-    protected void logDebug(String msg) {
+    @Override
+	protected void logDebug(String msg) {
         log.debug(msg);
     }
 
-    protected void logError(String msg, Throwable e) {
+    @Override
+	protected void logError(String msg, Throwable e) {
         log.error(msg, e);
     }
 }

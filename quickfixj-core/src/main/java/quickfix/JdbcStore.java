@@ -151,29 +151,35 @@ class JdbcStore implements MessageStore {
                 extendedSessionIdSupported, defaultSessionIdPropertyValue);
     }
 
-    public Date getCreationTime() throws IOException {
+    @Override
+	public Date getCreationTime() throws IOException {
         return cache.getCreationTime();
     }
 
-    public int getNextSenderMsgSeqNum() throws IOException {
+    @Override
+	public int getNextSenderMsgSeqNum() throws IOException {
         return cache.getNextSenderMsgSeqNum();
     }
 
-    public int getNextTargetMsgSeqNum() throws IOException {
+    @Override
+	public int getNextTargetMsgSeqNum() throws IOException {
         return cache.getNextTargetMsgSeqNum();
     }
 
-    public void incrNextSenderMsgSeqNum() throws IOException {
+    @Override
+	public void incrNextSenderMsgSeqNum() throws IOException {
         cache.incrNextSenderMsgSeqNum();
         setNextSenderMsgSeqNum(cache.getNextSenderMsgSeqNum());
     }
 
-    public void incrNextTargetMsgSeqNum() throws IOException {
+    @Override
+	public void incrNextTargetMsgSeqNum() throws IOException {
         cache.incrNextTargetMsgSeqNum();
         setNextTargetMsgSeqNum(cache.getNextTargetMsgSeqNum());
     }
 
-    public void reset() throws IOException {
+    @Override
+	public void reset() throws IOException {
         cache.reset();
         Connection connection = null;
         PreparedStatement deleteMessages = null;
@@ -200,7 +206,8 @@ class JdbcStore implements MessageStore {
         }
     }
 
-    public void get(int startSequence, int endSequence, Collection<String> messages)
+    @Override
+	public void get(int startSequence, int endSequence, Collection<String> messages)
             throws IOException {
         Connection connection = null;
         PreparedStatement query = null;
@@ -225,7 +232,8 @@ class JdbcStore implements MessageStore {
         }
     }
 
-    public boolean set(int sequence, String message) throws IOException {
+    @Override
+	public boolean set(int sequence, String message) throws IOException {
         Connection connection = null;
         PreparedStatement insert = null;
         ResultSet rs = null;
@@ -260,12 +268,14 @@ class JdbcStore implements MessageStore {
         return true;
     }
 
-    public void setNextSenderMsgSeqNum(int next) throws IOException {
+    @Override
+	public void setNextSenderMsgSeqNum(int next) throws IOException {
         cache.setNextSenderMsgSeqNum(next);
         storeSequenceNumbers();
     }
 
-    public void setNextTargetMsgSeqNum(int next) throws IOException {
+    @Override
+	public void setNextTargetMsgSeqNum(int next) throws IOException {
         cache.setNextTargetMsgSeqNum(next);
         storeSequenceNumbers();
     }
@@ -288,7 +298,8 @@ class JdbcStore implements MessageStore {
         }
     }
 
-    public void refresh() throws IOException {
+    @Override
+	public void refresh() throws IOException {
         try {
             loadCache();
         } catch (SQLException e) {

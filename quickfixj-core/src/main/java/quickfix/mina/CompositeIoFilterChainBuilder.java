@@ -38,7 +38,8 @@ public class CompositeIoFilterChainBuilder extends DefaultIoFilterChainBuilder {
         this.userFilterChainBuilder = userFilterChainBuilder;
     }
 
-    public void buildFilterChain(IoFilterChain chain) throws Exception {
+    @Override
+	public void buildFilterChain(IoFilterChain chain) throws Exception {
         super.buildFilterChain(chain);
         if (userFilterChainBuilder != null) {
             userFilterChainBuilder.buildFilterChain(chain);

@@ -109,11 +109,13 @@ public class SLF4JLog extends AbstractLog {
         return processedCategory;
     }
 
-    public void onEvent(String text) {
+    @Override
+	public void onEvent(String text) {
         log(eventLog, text);
     }
 
-    public void onErrorEvent(String text) {
+    @Override
+	public void onErrorEvent(String text) {
         logError(errorEventLog, text);
     }
 
@@ -147,7 +149,8 @@ public class SLF4JLog extends AbstractLog {
 
     private final String clearString = "Log clear operation is not supported: " + getClass().getName();
 
-    public void clear() {
+    @Override
+	public void clear() {
         onEvent(clearString);
     }
 

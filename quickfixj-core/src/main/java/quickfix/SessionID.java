@@ -160,15 +160,18 @@ public class SessionID implements Serializable {
         return sessionQualifier;
     }
 
-    public boolean equals(Object object) {
+    @Override
+	public boolean equals(Object object) {
         return object != null && toString().equals(object.toString());
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return id;
     }
 
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return toString().hashCode();
     }
 

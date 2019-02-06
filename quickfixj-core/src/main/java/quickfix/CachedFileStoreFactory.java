@@ -39,7 +39,8 @@ public class CachedFileStoreFactory extends FileStoreFactory {
      *
      * @param sessionID session ID for the message store.
      */
-    public MessageStore create(SessionID sessionID) {
+    @Override
+	public MessageStore create(SessionID sessionID) {
         try {
             boolean syncWrites = false;
             if (settings.isSetting(sessionID, SETTING_FILE_STORE_SYNC)) {

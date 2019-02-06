@@ -503,19 +503,24 @@ public final class SessionState {
     }
 
     private final static class NullLog implements Log {
-        public void onOutgoing(String message) {
+        @Override
+		public void onOutgoing(String message) {
         }
 
-        public void onIncoming(String message) {
+        @Override
+		public void onIncoming(String message) {
         }
 
-        public void onEvent(String text) {
+        @Override
+		public void onEvent(String text) {
         }
 
-        public void onErrorEvent(String text) {
+        @Override
+		public void onErrorEvent(String text) {
         }
 
-        public void clear() {
+        @Override
+		public void clear() {
         }
     }
 

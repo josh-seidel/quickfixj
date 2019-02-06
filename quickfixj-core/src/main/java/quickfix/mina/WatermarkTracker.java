@@ -146,7 +146,8 @@ public class WatermarkTracker<E,S> implements QueueTracker<E> {
             @Override public Iterator<E> iterator() { throw new UnsupportedOperationException(); }
             @Override public int size() { throw new UnsupportedOperationException(); }
 
-            public boolean add(E e) {
+            @Override
+			public boolean add(E e) {
                 final boolean added = collection.add(e);
                 if (added) {
                     trackerForPayload(e).outgoing(1);

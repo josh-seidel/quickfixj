@@ -84,11 +84,13 @@ public class FileLog extends AbstractLog {
         events = new FileOutputStream(eventFileName, append);
     }
 
-    protected void logIncoming(String message) {
+    @Override
+	protected void logIncoming(String message) {
         writeMessage(messages, messagesLock, message, false);
     }
 
-    protected void logOutgoing(String message) {
+    @Override
+	protected void logOutgoing(String message) {
         writeMessage(messages, messagesLock, message, false);
     }
 
@@ -113,11 +115,13 @@ public class FileLog extends AbstractLog {
         }
     }
 
-    public void onEvent(String message) {
+    @Override
+	public void onEvent(String message) {
         writeMessage(events, eventsLock, message, true);
     }
 
-    public void onErrorEvent(String message) {
+    @Override
+	public void onErrorEvent(String message) {
         writeMessage(events, eventsLock, message, true);
     }
 
@@ -154,7 +158,8 @@ public class FileLog extends AbstractLog {
      * Deletes the log files. Do not perform any log operations while performing
      * this operation.
      */
-    public void clear() {
+    @Override
+	public void clear() {
         try {
             close();
             openLogStreams(false);

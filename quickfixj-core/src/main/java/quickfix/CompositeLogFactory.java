@@ -45,7 +45,8 @@ public class CompositeLogFactory implements LogFactory {
      * @return the composite log
      * @see SessionFactory
      */
-    public Log create(SessionID sessionID) {
+    @Override
+	public Log create(SessionID sessionID) {
         Log[] logs = new Log[logFactories.length];
         for (int i = 0; i < logFactories.length; i++) {
             if (logFactories[i] instanceof LocationAwareLogFactory) {

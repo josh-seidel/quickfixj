@@ -116,7 +116,8 @@ public class ScreenLogFactory implements LogFactory {
         this.heartBeats = logHeartBeats;
     }
 
-    public Log create(SessionID sessionID) {
+    @Override
+	public Log create(SessionID sessionID) {
         try {
             incoming = getBooleanSetting(sessionID, ScreenLogFactory.SETTING_LOG_INCOMING, incoming);
             outgoing = getBooleanSetting(sessionID, ScreenLogFactory.SETTING_LOG_OUTGOING, outgoing);

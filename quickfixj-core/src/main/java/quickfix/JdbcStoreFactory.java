@@ -40,7 +40,8 @@ public class JdbcStoreFactory implements MessageStoreFactory {
      *
      * @param sessionID the sessionID for the message store.
      */
-    public MessageStore create(SessionID sessionID) {
+    @Override
+	public MessageStore create(SessionID sessionID) {
         try {
             return new JdbcStore(settings, sessionID, dataSource);
         } catch (Exception e) {

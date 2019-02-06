@@ -47,7 +47,8 @@ public class SleepycatStoreFactory implements MessageStoreFactory {
         this.settings = settings;
     }
 
-    public MessageStore create(SessionID sessionID) {
+    @Override
+	public MessageStore create(SessionID sessionID) {
         try {
             String dbDir = settings.getString(sessionID, SETTING_SLEEPYCAT_DATABASE_DIR);
             String seqDbName = "seq";

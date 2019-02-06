@@ -75,7 +75,8 @@ public class SleepycatStore implements MessageStore {
          *
          * @see com.sleepycat.bind.tuple.TupleBinding#entryToObject(com.sleepycat.bind.tuple.TupleInput)
          */
-        public Object entryToObject(TupleInput tupleIn) {
+        @Override
+		public Object entryToObject(TupleInput tupleIn) {
             return new SessionID(tupleIn.readString(), tupleIn.readString(), tupleIn.readString(),
                     tupleIn.readString(), tupleIn.readString(), tupleIn.readString(), tupleIn
                             .readString(), tupleIn.readString());
@@ -87,7 +88,8 @@ public class SleepycatStore implements MessageStore {
          * @see com.sleepycat.bind.tuple.TupleBinding#objectToEntry(java.lang.Object,
          *      com.sleepycat.bind.tuple.TupleOutput)
          */
-        public void objectToEntry(Object object, TupleOutput tupleOut) {
+        @Override
+		public void objectToEntry(Object object, TupleOutput tupleOut) {
             SessionID sessionID = (SessionID) object;
             tupleOut.writeString(sessionID.getBeginString());
             tupleOut.writeString(sessionID.getSenderCompID());
@@ -107,7 +109,8 @@ public class SleepycatStore implements MessageStore {
          *
          * @see com.sleepycat.bind.tuple.TupleBinding#entryToObject(com.sleepycat.bind.tuple.TupleInput)
          */
-        public Object entryToObject(TupleInput tupleIn) {
+        @Override
+		public Object entryToObject(TupleInput tupleIn) {
             return new SessionInfo(SystemTime.getUtcCalendar(new Date(tupleIn.readLong())), tupleIn
                     .readInt(), tupleIn.readInt());
         }
@@ -118,7 +121,8 @@ public class SleepycatStore implements MessageStore {
          * @see com.sleepycat.bind.tuple.TupleBinding#objectToEntry(java.lang.Object,
          *      com.sleepycat.bind.tuple.TupleOutput)
          */
-        public void objectToEntry(Object object, TupleOutput tupleOut) {
+        @Override
+		public void objectToEntry(Object object, TupleOutput tupleOut) {
             SessionInfo sessionInfo = (SessionInfo) object;
             tupleOut.writeLong(sessionInfo.getCreationTime().getTimeInMillis());
             tupleOut.writeInt(sessionInfo.getNextSenderMsgSeqNum());
@@ -206,7 +210,8 @@ public class SleepycatStore implements MessageStore {
         }
     }
 
-    public synchronized void get(int startSequence, int endSequence, Collection<String> messages)
+    @Override
+	public synchronized void get(int startSequence, int endSequence, Collection<String> messages)
             throws IOException {
         Cursor cursor = null;
         try {
@@ -256,29 +261,35 @@ public class SleepycatStore implements MessageStore {
         throw ioe;
     }
 
-    public Date getCreationTime() throws IOException {
+    @Override
+	public Date getCreationTime() throws IOException {
         return info.getCreationTime().getTime();
     }
 
-    public int getNextSenderMsgSeqNum() throws IOException {
+    @Override
+	public int getNextSenderMsgSeqNum() throws IOException {
         return info.getNextSenderMsgSeqNum();
     }
 
-    public int getNextTargetMsgSeqNum() throws IOException {
+    @Override
+	public int getNextTargetMsgSeqNum() throws IOException {
         return info.getNextTargetMsgSeqNum();
     }
 
-    public void incrNextSenderMsgSeqNum() throws IOException {
+    @Override
+	public void incrNextSenderMsgSeqNum() throws IOException {
         info.setNextSenderMsgSeqNum(info.getNextSenderMsgSeqNum() + 1);
         storeSessionInfo();
     }
 
-    public void incrNextTargetMsgSeqNum() throws IOException {
+    @Override
+	public void incrNextTargetMsgSeqNum() throws IOException {
         info.setNextTargetMsgSeqNum(info.getNextTargetMsgSeqNum() + 1);
         storeSessionInfo();
     }
 
-    public void reset() throws IOException {
+    @Override
+	public void reset() throws IOException {
         try {
             info = new SessionInfo();
             storeSessionInfo();
@@ -293,7 +304,8 @@ public class SleepycatStore implements MessageStore {
         }
     }
 
-    public boolean set(int sequence, String message) throws IOException {
+    @Override
+	public boolean set(int sequence, String message) throws IOException {
         try {
             DatabaseEntry sequenceKey = new DatabaseEntry();
             EntryBinding sequenceBinding = TupleBinding.getPrimitiveBinding(Integer.class);
@@ -306,12 +318,14 @@ public class SleepycatStore implements MessageStore {
         return true;
     }
 
-    public void setNextSenderMsgSeqNum(int next) throws IOException {
+    @Override
+	public void setNextSenderMsgSeqNum(int next) throws IOException {
         info.setNextSenderMsgSeqNum(next);
         storeSessionInfo();
     }
 
-    public void setNextTargetMsgSeqNum(int next) throws IOException {
+    @Override
+	public void setNextTargetMsgSeqNum(int next) throws IOException {
         info.setNextTargetMsgSeqNum(next);
         storeSessionInfo();
     }
@@ -347,7 +361,8 @@ public class SleepycatStore implements MessageStore {
         }
     }
 
-    public void refresh() throws IOException {
+    @Override
+	public void refresh() throws IOException {
         loadSessionInfo();
     }
 }

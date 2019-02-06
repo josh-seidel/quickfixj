@@ -49,7 +49,8 @@ public class Order implements Cloneable {
         this.ID = ID;
     }
 
-    public Object clone() {
+    @Override
+	public Object clone() {
         try {
             Order order = (Order) super.clone();
             order.setOriginalID(getID());

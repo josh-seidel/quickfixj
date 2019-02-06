@@ -158,7 +158,8 @@ public abstract class SessionConnector implements Connector {
      *
      * @return list of session identifiers
      */
-    public ArrayList<SessionID> getSessions() {
+    @Override
+	public ArrayList<SessionID> getSessions() {
         return new ArrayList<>(sessions.keySet());
     }
 
@@ -195,7 +196,8 @@ public abstract class SessionConnector implements Connector {
      *
      * @return false if no session or at least one session is not logged on
      */
-    public boolean isLoggedOn() {
+    @Override
+	public boolean isLoggedOn() {
         // if no session, not logged on
         if (sessions.isEmpty())
             return false;
@@ -343,7 +345,8 @@ public abstract class SessionConnector implements Connector {
     }
 
     private class SessionTimerTask implements Runnable {
-        public void run() {
+        @Override
+		public void run() {
             try {
                 for (Session session : sessions.values()) {
                     try {
@@ -411,7 +414,8 @@ public abstract class SessionConnector implements Connector {
 
     private static class QFTimerThreadFactory implements ThreadFactory {
 
-        public Thread newThread(Runnable runnable) {
+        @Override
+		public Thread newThread(Runnable runnable) {
             Thread thread = new Thread(runnable, "QFJ Timer");
             thread.setDaemon(true);
             return thread;

@@ -232,7 +232,8 @@ public class Repository {
     }
 
     class MsgContentNodeComparator implements Comparator<Object> {
-        public int compare(Object o1, Object o2) {
+        @Override
+		public int compare(Object o1, Object o2) {
             try {
                 Double pos1 = Double.parseDouble(getSingleNodeTextSafe((Node) o1, "Position"));
                 Double pos2 = Double.parseDouble(getSingleNodeTextSafe((Node) o2, "Position"));
@@ -244,7 +245,8 @@ public class Repository {
     }
 
     class EnumNodeComparator implements Comparator<Object> {
-        public int compare(Object o1, Object o2) {
+        @Override
+		public int compare(Object o1, Object o2) {
             try {
                 Double pos1 = Double.parseDouble(getSingleNodeTextSafe((Node) o1, "Sort"));
                 Double pos2 = Double.parseDouble(getSingleNodeTextSafe((Node) o2, "Sort"));

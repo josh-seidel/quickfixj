@@ -72,7 +72,8 @@ public class CancelReplacePanel extends JPanel {
         add(limitPriceTextField, ++x, y);
     }
 
-    public void setEnabled(boolean enabled) {
+    @Override
+	public void setEnabled(boolean enabled) {
         cancelButton.setEnabled(enabled);
         replaceButton.setEnabled(enabled);
         quantityTextField.setEnabled(enabled);
@@ -111,13 +112,15 @@ public class CancelReplacePanel extends JPanel {
     }
 
     private class CancelListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
+        @Override
+		public void actionPerformed(ActionEvent e) {
             application.cancel(order);
         }
     }
 
     private class ReplaceListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
+        @Override
+		public void actionPerformed(ActionEvent e) {
             Order newOrder = (Order) order.clone();
             newOrder.setQuantity
             (Integer.parseInt(quantityTextField.getText()));

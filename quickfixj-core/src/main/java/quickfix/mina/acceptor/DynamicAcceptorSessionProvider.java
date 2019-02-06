@@ -127,7 +127,8 @@ public class DynamicAcceptorSessionProvider implements AcceptorSessionProvider {
                 messageFactory);
     }
 
-    public synchronized Session getSession(SessionID sessionID, SessionConnector sessionConnector) {
+    @Override
+	public synchronized Session getSession(SessionID sessionID, SessionConnector sessionConnector) {
         Session s = Session.lookupSession(sessionID);
         if (s == null) {
             try {

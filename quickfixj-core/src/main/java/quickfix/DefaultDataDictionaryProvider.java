@@ -59,11 +59,13 @@ public class DefaultDataDictionaryProvider implements DataDictionaryProvider {
         });
     }
 
-    public DataDictionary getSessionDataDictionary(String beginString) {
+    @Override
+	public DataDictionary getSessionDataDictionary(String beginString) {
         return transportDictionaries.computeIfAbsent(beginString);
     }
 
-    public DataDictionary getApplicationDataDictionary(ApplVerID applVerID) {
+    @Override
+	public DataDictionary getApplicationDataDictionary(ApplVerID applVerID) {
         return applicationDictionaries.computeIfAbsent(applVerID);
     }
 

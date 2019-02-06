@@ -40,7 +40,8 @@ public class ListenerSupport {
 
     private class ListenerInvocationHandler implements InvocationHandler {
 
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        @Override
+		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             if (method.getName().equals("toString") && args.length == 0) {
                 return getClass().getSimpleName() + "@" + System.identityHashCode(proxy);
             } else if (method.getDeclaringClass() == Object.class) {

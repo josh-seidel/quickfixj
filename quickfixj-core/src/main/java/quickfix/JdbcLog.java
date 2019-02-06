@@ -127,15 +127,18 @@ class JdbcLog extends AbstractLog {
         return deleteItemsSqlCache.get(tableName);
     }
 
-    public void onEvent(String value) {
+    @Override
+	public void onEvent(String value) {
         insert(eventTableName, value);
     }
 
-    protected void logIncoming(String message) {
+    @Override
+	protected void logIncoming(String message) {
         insert(incomingMessagesTableName, message);
     }
 
-    protected void logOutgoing(String message) {
+    @Override
+	protected void logOutgoing(String message) {
         insert(outgoingMessagesTableName, message);
     }
 
@@ -176,7 +179,8 @@ class JdbcLog extends AbstractLog {
     /**
      * Deletes all rows from the log tables.
      */
-    public void clear() {
+    @Override
+	public void clear() {
         clearTable(eventTableName);
         clearTable(incomingMessagesTableName);
         if (!incomingMessagesTableName.equals(outgoingMessagesTableName)) {
@@ -217,7 +221,8 @@ class JdbcLog extends AbstractLog {
                 extendedSessionIdSupported, defaultSessionIdPropertyValue);
     }
 
-    public void onErrorEvent(String text) {
+    @Override
+	public void onErrorEvent(String text) {
         onEvent(text);
     }
 }

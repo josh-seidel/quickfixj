@@ -33,7 +33,8 @@ public class ExecutionTable extends JTable {
         super(executionTableModel);
     }
 
-    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+    @Override
+	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
         //Execution execution = (Execution) ((ExecutionTableModel) dataModel).getExecution(row);
 
         DefaultTableCellRenderer r = (DefaultTableCellRenderer) renderer;

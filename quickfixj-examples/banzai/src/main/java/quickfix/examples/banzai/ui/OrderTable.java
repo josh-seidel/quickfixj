@@ -37,7 +37,8 @@ public class OrderTable extends JTable implements MouseListener {
         addMouseListener(this);
     }
 
-    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+    @Override
+	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
         Order order = ((OrderTableModel) dataModel).getOrder(row);
 
         int open = order.getOpen();
@@ -62,7 +63,8 @@ public class OrderTable extends JTable implements MouseListener {
         return super.prepareRenderer(renderer, row, column);
     }
 
-    public void mouseClicked(MouseEvent e) {
+    @Override
+	public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() != 2)
             return;
         int row = rowAtPoint(e.getPoint());
@@ -70,11 +72,15 @@ public class OrderTable extends JTable implements MouseListener {
         application.cancel(order);
     }
 
-    public void mouseEntered(MouseEvent e) {}
+    @Override
+	public void mouseEntered(MouseEvent e) {}
 
-    public void mouseExited(MouseEvent e) {}
+    @Override
+	public void mouseExited(MouseEvent e) {}
 
-    public void mousePressed(MouseEvent e) {}
+    @Override
+	public void mousePressed(MouseEvent e) {}
 
-    public void mouseReleased(MouseEvent e) {}
+    @Override
+	public void mouseReleased(MouseEvent e) {}
 }

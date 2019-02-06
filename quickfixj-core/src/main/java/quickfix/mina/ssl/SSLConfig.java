@@ -83,7 +83,8 @@ public class SSLConfig {
 			return false;
 		if (trustStoreType == null) {
 			return other.trustStoreType == null;
-		} else return trustStoreType.equals(other.trustStoreType);
+		}
+		return trustStoreType.equals(other.trustStoreType);
 	}
 
 	public String[] getEnabledCipherSuites() {

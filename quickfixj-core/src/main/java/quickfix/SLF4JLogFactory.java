@@ -60,7 +60,8 @@ public class SLF4JLogFactory implements LocationAwareLogFactory {
         this.settings = settings;
     }
 
-    public Log create(SessionID sessionID) {
+    @Override
+	public Log create(SessionID sessionID) {
         // it's actually code in AbstractLog that makes the final code to Log4J and not SLF4JLog itself
         // so send the AbstractLog here
         return create(sessionID, AbstractLog.class.getName());
@@ -69,7 +70,8 @@ public class SLF4JLogFactory implements LocationAwareLogFactory {
     /**
      * This supports use of this log in a CompositeLogFactory.
      */
-    public Log create(SessionID sessionID, String callerFQCN) {
+    @Override
+	public Log create(SessionID sessionID, String callerFQCN) {
         String eventCategory = null;
         String errorEventCategory = null;
         String incomingMsgCategory = null;

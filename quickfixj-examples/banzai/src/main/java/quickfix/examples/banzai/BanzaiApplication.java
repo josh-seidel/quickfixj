@@ -91,28 +91,35 @@ public class BanzaiApplication implements Application {
         this.executionTableModel = executionTableModel;
     }
 
-    public void onCreate(SessionID sessionID) {
+    @Override
+	public void onCreate(SessionID sessionID) {
     }
 
-    public void onLogon(SessionID sessionID) {
+    @Override
+	public void onLogon(SessionID sessionID) {
         observableLogon.logon(sessionID);
     }
 
-    public void onLogout(SessionID sessionID) {
+    @Override
+	public void onLogout(SessionID sessionID) {
         observableLogon.logoff(sessionID);
     }
 
-    public void toAdmin(quickfix.Message message, SessionID sessionID) {
+    @Override
+	public void toAdmin(quickfix.Message message, SessionID sessionID) {
     }
 
-    public void toApp(quickfix.Message message, SessionID sessionID) throws DoNotSend {
+    @Override
+	public void toApp(quickfix.Message message, SessionID sessionID) throws DoNotSend {
     }
 
-    public void fromAdmin(quickfix.Message message, SessionID sessionID) throws FieldNotFound,
+    @Override
+	public void fromAdmin(quickfix.Message message, SessionID sessionID) throws FieldNotFound,
             IncorrectDataFormat, IncorrectTagValue, RejectLogon {
     }
 
-    public void fromApp(quickfix.Message message, SessionID sessionID) throws FieldNotFound,
+    @Override
+	public void fromApp(quickfix.Message message, SessionID sessionID) throws FieldNotFound,
             IncorrectDataFormat, IncorrectTagValue, UnsupportedMessageType {
         try {
             SwingUtilities.invokeLater(new MessageProcessor(message, sessionID));
@@ -129,7 +136,8 @@ public class BanzaiApplication implements Application {
             this.sessionID = sessionID;
         }
 
-        public void run() {
+        @Override
+		public void run() {
             try {
                 MsgType msgType = new MsgType();
                 if (isAvailable) {

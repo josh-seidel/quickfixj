@@ -62,13 +62,15 @@ public class ScreenLog extends AbstractLog {
         this.includeMillis = includeMillis;
     }
 
-    protected void logIncoming(String message) {
+    @Override
+	protected void logIncoming(String message) {
         if (incoming) {
             logMessage(message, INCOMING_CATEGORY);
         }
     }
 
-    protected void logOutgoing(String message) {
+    @Override
+	protected void logOutgoing(String message) {
         if (outgoing) {
             logMessage(message, OUTGOING_CATEGORY);
         }
@@ -78,13 +80,15 @@ public class ScreenLog extends AbstractLog {
         log(message, type);
     }
 
-    public void onEvent(String message) {
+    @Override
+	public void onEvent(String message) {
         if (events) {
             log(message, EVENT_CATEGORY);
         }
     }
 
-    public void onErrorEvent(String message) {
+    @Override
+	public void onErrorEvent(String message) {
         log(message, ERROR_EVENT_CATEGORY);
     }
 
@@ -98,7 +102,8 @@ public class ScreenLog extends AbstractLog {
         this.out = out;
     }
 
-    public void clear() {
+    @Override
+	public void clear() {
         onEvent("Log clear operation is not supported: " + getClass().getName());
     }
 
