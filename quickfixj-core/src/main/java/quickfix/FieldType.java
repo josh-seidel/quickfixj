@@ -59,7 +59,7 @@ public enum FieldType {
 
     private final Class<?> javaType;
 
-    FieldType(Class<?> javaType) {
+    FieldType(final Class<?> javaType) {
         this.javaType = javaType;
     }
 
@@ -73,7 +73,7 @@ public enum FieldType {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "[" + name() + "," + javaType + "," + ordinal() + "]";
+        return getClass().getSimpleName() + '[' + name() + ',' + javaType + ',' + ordinal() + ']';
     }
 
     public static FieldType fromName(String fixVersion, String name) {

@@ -901,7 +901,7 @@ public class Message extends FieldMap {
 	 *
 	 * @return flag indicating whether the message has a valid structure
 	 */
-	boolean hasValidStructure() {
+	public boolean hasValidStructure() {
 		return exception == null;
 	}
 

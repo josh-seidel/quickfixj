@@ -592,7 +592,7 @@ public abstract class FieldMap implements Serializable {
 		return groups.keySet().iterator();
 	}
 
-	Map<Integer, List<Group>> getGroups() {
+	public Map<Integer, List<Group>> getGroups() {
 		return groups;
 	}
 
