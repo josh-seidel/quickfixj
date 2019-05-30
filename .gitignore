@@ -1,9 +1,12 @@
 # ignore maven build directories
 target/
+# ignore maven build backup pom files
+pom.xml.bak
 # ignore Eclipse configuration files
 .project
 .classpath
 .settings
+.factorypath
 # ignore IntelliJ configuration files
 .idea/
 *.iml
@@ -13,3 +16,5 @@ target/
 nb-configuration.xml
 /.metadata/
 /.recommenders/
+# ignore macOS files
+.DS_Store
