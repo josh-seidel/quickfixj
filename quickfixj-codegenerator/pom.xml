@@ -20,13 +20,13 @@
       <groupId>net.sf.saxon</groupId>
       <artifactId>Saxon-HE</artifactId>
       <!-- 9.9.0-1 has an array index out of bounds issue during maven execution. -->
-      <version>9.9.1-4</version>
+      <version>9.9.1-5</version>
       <!-- version>9.8.0-14</version -->
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
-      <version>3.6.1</version>
+      <version>3.6.2</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>

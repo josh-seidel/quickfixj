@@ -219,10 +219,10 @@ public class Message extends FieldMap {
 		return header.calculateLength() + calculateLength() + trailer.calculateLength();
 	}
 
-	private static final DecimalFormat checksumFormat = new DecimalFormat("000");
+	private static final ThreadLocal<DecimalFormat> checksumFormat = ThreadLocal.withInitial(() -> new DecimalFormat("000"));
 
 	private String checksum() {
-		return checksumFormat.format(
+		return checksumFormat.get().format(
 			(header.calculateChecksum() + calculateChecksum() + trailer.calculateChecksum()) & 0xFF);
 	}
 
@@ -628,9 +628,10 @@ public class Message extends FieldMap {
 				if (dd != null && dd.isGroup(DataDictionary.HEADER_ID, field.getField())) {
 					parseGroup(DataDictionary.HEADER_ID, field, dd, dd, header, doValidation);
 				}
-				if (doValidation && dd != null && dd.isCheckFieldsOutOfOrder())
+				if (doValidation && dd != null && dd.isCheckFieldsOutOfOrder()) {
 					throw new FieldException(SessionRejectReason.TAG_SPECIFIED_OUT_OF_REQUIRED_ORDER,
 						field.getTag());
+				}
 			} else {
 				setField(this, field);
 				// Group case
@@ -738,7 +739,7 @@ public class Message extends FieldMap {
 	}
 
 	private boolean checkFieldValidation(FieldMap parent, DataDictionary parentDD, StringField field, String msgType, boolean doValidation, Group group) throws FieldException {
-		boolean isField = (parent instanceof Group) ? parentDD.isField(field.getTag()) : parentDD.isMsgField(msgType, field.getTag());
+		final boolean isField = (parent instanceof Group) ? parentDD.isField(field.getTag()) : parentDD.isMsgField(msgType, field.getTag());
 		if (!isField) {
 			if (doValidation) {
 				boolean fail = parentDD.checkFieldFailure(field.getTag(), false);
@@ -941,5 +942,4 @@ public class Message extends FieldMap {
 	void setGarbled(boolean isGarbled) {
 		this.isGarbled = isGarbled;
 	}
-
 }

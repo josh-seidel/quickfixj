@@ -19,6 +19,8 @@
 
 package quickfix.mina.initiator;
 
+import java.util.Optional;
+
 import org.apache.mina.core.session.IoSession;
 
 import quickfix.Message;
@@ -35,44 +37,45 @@ import quickfix.mina.NetworkingOptions;
 import quickfix.mina.SessionConnector;
 
 class InitiatorIoHandler extends AbstractIoHandler {
-    private final Session quickfixSession;
-    private final EventHandlingStrategy eventHandlingStrategy;
+	private final Session quickfixSession;
+	private final EventHandlingStrategy eventHandlingStrategy;
 
-    public InitiatorIoHandler(Session quickfixSession, NetworkingOptions networkingOptions,
-            EventHandlingStrategy eventHandlingStrategy) {
-        super(networkingOptions, eventHandlingStrategy);
-        this.quickfixSession = quickfixSession;
-        this.eventHandlingStrategy = eventHandlingStrategy;
-    }
+	public InitiatorIoHandler(final Session quickfixSession, final NetworkingOptions networkingOptions,
+			final EventHandlingStrategy eventHandlingStrategy) {
+		super(networkingOptions, eventHandlingStrategy);
+		this.quickfixSession = quickfixSession;
+		this.eventHandlingStrategy = eventHandlingStrategy;
+	}
 
-    @Override
-    public void sessionCreated(IoSession session) throws Exception {
-        super.sessionCreated(session);
-        session.setAttribute(SessionConnector.QF_SESSION, quickfixSession);
-        NetworkingOptions networkingOptions = getNetworkingOptions();
-        quickfixSession.setResponder(new IoSessionResponder(session,
-                networkingOptions.getSynchronousWrites(),
-                networkingOptions.getSynchronousWriteTimeout(),
-                quickfixSession.getMaxScheduledWriteRequests()));
-        quickfixSession.getLog().onEvent("MINA session created: local="
-                + session.getLocalAddress() + ", " + session.getClass() + ", remote="
-                + session.getRemoteAddress());
-    }
+	@Override
+	public void sessionCreated(final IoSession session) throws Exception {
+		super.sessionCreated(session);
+		session.setAttribute(SessionConnector.QF_SESSION, quickfixSession);
+		final NetworkingOptions networkingOptions = getNetworkingOptions();
+		quickfixSession.setResponder(new IoSessionResponder(session,
+				networkingOptions.getSynchronousWrites(),
+				networkingOptions.getSynchronousWriteTimeout(),
+				quickfixSession.getMaxScheduledWriteRequests()));
+		quickfixSession.getLog().onEvent("MINA session created: local="
+				+ session.getLocalAddress() + ", " + session.getClass() + ", remote="
+				+ session.getRemoteAddress());
+	}
 
-    @Override
-    protected void processMessage(IoSession protocolSession, Message message) throws Exception {
-        if (message.getHeader().getString(MsgType.FIELD).equals(MsgType.LOGON)) {
-            final SessionID sessionID = MessageUtils.getReverseSessionID(message);
-            if (sessionID.isFIXT()) {
-                if (message.isSetField(DefaultApplVerID.FIELD)) {
-                    final ApplVerID applVerID = new ApplVerID(message.getString(DefaultApplVerID.FIELD));
-                    quickfixSession.setTargetDefaultApplicationVersionID(applVerID);
-                    quickfixSession.getLog().onEvent("Setting DefaultApplVerID (" + DefaultApplVerID.FIELD + "="
-                            + applVerID.getValue() + ") from Logon");
-                }
-            }
-        }
-        eventHandlingStrategy.onMessage(quickfixSession, message);
-    }
+	@Override
+	protected void processMessage(final IoSession protocolSession, final Message message) throws Exception {
+		final Optional<String> msgTypeField = message.getHeader().getOptionalString(MsgType.FIELD);
+		if (msgTypeField.isPresent() && MsgType.LOGON.equals(msgTypeField.get())) {
+			final SessionID sessionID = MessageUtils.getReverseSessionID(message);
+			if (sessionID.isFIXT()) {
+				if (message.isSetField(DefaultApplVerID.FIELD)) {
+					final ApplVerID applVerID = new ApplVerID(message.getString(DefaultApplVerID.FIELD));
+					quickfixSession.setTargetDefaultApplicationVersionID(applVerID);
+					quickfixSession.getLog().onEvent("Setting DefaultApplVerID (" + DefaultApplVerID.FIELD + "="
+							+ applVerID.getValue() + ") from Logon");
+				}
+			}
+		}
+		eventHandlingStrategy.onMessage(quickfixSession, message);
+	}
 
 }

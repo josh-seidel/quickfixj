@@ -1,10 +1,16 @@
 language: java
 sudo: false
 jdk:
-  - oraclejdk8
+  - openjdk8
+  - openjdk11
+  - openjdk13
+  - openjdk-ea
+matrix:
+  allow_failures:
+    - jdk: openjdk-ea
 before_script:
   - ulimit -n 4096
 before_install:
-  - echo "MAVEN_OPTS='-Xms2g -Xmx3g'" > ~/.mavenrc
+  - echo "MAVEN_OPTS='-Xms2g -Xmx4g'" > ~/.mavenrc
 script:
   - travis_wait 30 mvn test -B -V -Djava.util.logging.config.file=logging.properties
