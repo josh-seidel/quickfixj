@@ -47,24 +47,26 @@ public class SLF4JLog extends AbstractLog {
 
     private final Logger outgoingMsgLog;
 
+    private final String logPrefix;
+
     private final String callerFQCN;
 
-    public SLF4JLog(SessionID sessionID, String eventCategory, String errorEventCategory,
-                    String incomingMsgCategory, String outgoingMsgCategory, boolean prependSessionID,
-                    boolean logHeartbeats, String inCallerFQCN) {
+    public SLF4JLog(final SessionID sessionID, final String eventCategory, final String errorEventCategory,
+            final String incomingMsgCategory, final String outgoingMsgCategory, final boolean prependSessionID,
+            final boolean logHeartbeats, final String inCallerFQCN) {
         setLogHeartbeats(logHeartbeats);
-        String logPrefix = prependSessionID ? (sessionID + ": ") : "";
-        eventLog = getLogger(sessionID, eventCategory, DEFAULT_EVENT_CATEGORY, logPrefix);
-        errorEventLog = getLogger(sessionID, errorEventCategory, DEFAULT_ERROR_EVENT_CATEGORY, logPrefix);
-        incomingMsgLog = getLogger(sessionID, incomingMsgCategory, DEFAULT_INCOMING_MSG_CATEGORY, logPrefix);
-        outgoingMsgLog = getLogger(sessionID, outgoingMsgCategory, DEFAULT_OUTGOING_MSG_CATEGORY, logPrefix);
+        logPrefix = prependSessionID ? (sessionID + ": ") : null;
+        eventLog = getLogger(sessionID, eventCategory, DEFAULT_EVENT_CATEGORY);
+        errorEventLog = getLogger(sessionID, errorEventCategory, DEFAULT_ERROR_EVENT_CATEGORY);
+        incomingMsgLog = getLogger(sessionID, incomingMsgCategory, DEFAULT_INCOMING_MSG_CATEGORY);
+        outgoingMsgLog = getLogger(sessionID, outgoingMsgCategory, DEFAULT_OUTGOING_MSG_CATEGORY);
         callerFQCN = inCallerFQCN;
     }
 
-    private Logger getLogger(SessionID sessionID, String category, String defaultCategory, String logPrefix) {
-        return LoggerFactory.getLogger((category != null
+    private Logger getLogger(final SessionID sessionID, final String category, final String defaultCategory) {
+        return LoggerFactory.getLogger(category != null
                 ? substituteVariables(sessionID, category)
-                : defaultCategory) + logPrefix);
+                : defaultCategory);
     }
 
     private static final String FIX_MAJOR_VERSION_VAR = "\\$\\{fixMajorVersion}";
@@ -85,7 +87,7 @@ public class SLF4JLog extends AbstractLog {
 
     private static final String QUALIFIER_VAR = "\\$\\{qualifier}";
 
-    private String substituteVariables(SessionID sessionID, String category) {
+    private String substituteVariables(final SessionID sessionID, final String category) {
         final String[] beginStringFields = sessionID.getBeginString().split("\\.");
         String processedCategory = category;
         processedCategory = processedCategory.replaceAll(FIX_MAJOR_VERSION_VAR,
@@ -110,41 +112,43 @@ public class SLF4JLog extends AbstractLog {
     }
 
     @Override
-	public void onEvent(String text) {
+	public void onEvent(final String text) {
         log(eventLog, text);
     }
 
     @Override
-	public void onErrorEvent(String text) {
+	public void onErrorEvent(final String text) {
         logError(errorEventLog, text);
     }
 
     @Override
-    protected void logIncoming(String message) {
+    protected void logIncoming(final String message) {
         log(incomingMsgLog, message);
     }
 
     @Override
-    protected void logOutgoing(String message) {
+    protected void logOutgoing(final String message) {
         log(outgoingMsgLog, message);
     }
 
     /**
      * Made protected to enable unit testing of callerFQCN coming through correctly
      */
-    protected void log(org.slf4j.Logger log, String text) {
+    protected void log(final org.slf4j.Logger log, final String text) {
         if (log.isInfoEnabled()) {
+            final String message = logPrefix != null ? (logPrefix + text) : text;
             if (log instanceof LocationAwareLogger) {
                 final LocationAwareLogger la = (LocationAwareLogger) log;
-                la.log(null, callerFQCN, LocationAwareLogger.INFO_INT, text, null, null);
+                la.log(null, callerFQCN, LocationAwareLogger.INFO_INT, message, null, null);
             } else {
-                log.info(text);
+                log.info(message);
             }
         }
     }
 
-    protected void logError(org.slf4j.Logger log, String text) {
-        log.error(text);
+    protected void logError(final org.slf4j.Logger log, final String text) {
+        final String message = logPrefix != null ? (logPrefix + text) : text;
+        log.error(message);
     }
 
     private final String clearString = "Log clear operation is not supported: " + getClass().getName();
